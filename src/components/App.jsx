@@ -63,8 +63,17 @@ class App extends Component {
     const visibleContacts = this.getVisibleContact();
 
     return (
-      <div>
-        <h1>Phonebook</h1>
+      <div
+        style={{
+          width: '600px',
+          height: 'auto',
+          border: '1px solid black',
+          marginRight: 'auto',
+          marginLeft: 'auto',
+          padding: '20px',
+        }}
+      >
+        <h1 style={{ textAlign: 'center' }}>Phonebook</h1>
         <ContactForm
           contacts={contacts}
           filter={filter}

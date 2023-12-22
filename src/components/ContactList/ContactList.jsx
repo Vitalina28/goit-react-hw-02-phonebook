@@ -1,10 +1,12 @@
+import './ContactList.css';
+
 const ContactList = ({ visibleContacts, onDelete }) => {
   return (
-    <ul>
+    <ul className="list">
       {visibleContacts.map(({ id, name, number }) => (
-        <li key={id}>
+        <li className="li" key={id}>
           {name}: {number}
-          <button type="button" onClick={() => onDelete(id)}>
+          <button className="button" type="button" onClick={() => onDelete(id)}>
             Delete
           </button>
         </li>

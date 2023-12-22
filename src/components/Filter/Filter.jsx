@@ -1,8 +1,10 @@
+import './Filter.css';
+
 const Filter = ({ filter, onChange }) => {
   return (
-    <label>
+    <label className="label">
       Find contacts by name
-      <input type="text" value={filter} onChange={onChange} />
+      <input className="input" type="text" value={filter} onChange={onChange} />
     </label>
   );
 };
