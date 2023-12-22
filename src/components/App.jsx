@@ -1,5 +1,8 @@
 import { Component } from 'react';
 import { nanoid } from 'nanoid';
+import ContactForm from './ContactForm/ContactForm';
+import Filter from 'components/Filter/Filter';
+import ContactList from 'components/ContactList/ContactList';
 
 class App extends Component {
   state = {
@@ -10,11 +13,23 @@ class App extends Component {
       { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
     ],
     filter: '',
-    name: '',
-    number: '',
+  };
+
+  addUserName = ({ name, number }) => {
+    const User = {
+      id: nanoid(),
+      name,
+      number,
+    };
+
+    console.log(User);
+    this.setState(prevState => ({
+      contacts: [User, ...prevState.contacts],
+    }));
   };
 
   createUser = data => {
+    console.log(data);
     const newUser = {
       ...data,
       id: nanoid(),
@@ -23,94 +38,48 @@ class App extends Component {
     console.log(newUser);
   };
 
-  handleChange = ({ target }) => {
-    this.setState({ [target.name]: target.value });
-    this.setState({ [target.number]: target.value });
+  changeFilter = e => {
+    this.setState({ filter: e.currentTarget.value });
   };
 
-  handleSubmit = e => {
-    e.preventDefault();
-    this.createUser({
-      name: this.state.name,
-      number: this.state.number,
-    });
-    this.reset();
-
-    this.addUserName(this.state.name, this.state.number);
-  };
-
-  addUserName = (text, num) => {
-    console.log(text, num);
-
-    const User = {
-      text,
-      num,
-    };
-    console.log(User);
+  deleteContact = contactId => {
     this.setState(prevState => ({
-      contacts: [User, ...prevState.contacts],
+      contacts: prevState.contacts.filter(contact => contact.id !== contactId),
     }));
   };
 
-  changeFilter = e => {
-    this.setState({ filter: e.currentTarget.value });
-    console.log(e.currentTarget.value);
-  };
+  getVisibleContact = () => {
+    const { contacts, filter } = this.state;
+    const normalizeFilter = filter.toLowerCase();
 
-  reset = () => {
-    this.setState({ name: '', number: '' });
+    return contacts.filter(contact =>
+      contact.name.toLowerCase().includes(normalizeFilter)
+    );
   };
 
   render() {
-    const normalizeFilter = this.state.filter.toLowerCase();
-    const visibleName = this.state.contacts.filter(name =>
-      name.text.toLowerCase().includes(normalizeFilter)
-    );
+    const { contacts, filter } = this.state;
+
+    const visibleContacts = this.getVisibleContact();
 
     return (
-      <form onSubmit={this.handleSubmit}>
-        <label>
-          Name
-          <input
-            type="text"
-            name="name"
-            value={this.state.name}
-            onChange={this.handleChange}
-            required
-          />
-        </label>
-        <label>
-          Number
-          <input
-            type="tel"
-            name="number"
-            value={this.state.number}
-            onChange={this.handleChange}
-            required
-          />
-        </label>
+      <div>
+        <h1>Phonebook</h1>
+        <ContactForm
+          contacts={contacts}
+          filter={filter}
+          createUser={this.createUser}
+          newUser={this.addUserName}
+        />
 
-        <button type="submit">Add contact</button>
-        <p>Contacts</p>
+        <h2>Contacts</h2>
+        <Filter filter={filter} onChange={this.changeFilter} />
 
-        <label>
-          Find contacts by name
-          <input
-            type="text"
-            value={this.state.filter}
-            onChange={this.changeFilter}
-          />
-        </label>
-
-        <ul>
-          {this.state.contacts.length !== 0 &&
-            visibleName.map(user => (
-              <li key={user.text}>
-                {user.text}: {user.num}
-              </li>
-            ))}
-        </ul>
-      </form>
+        <ContactList
+          visibleContacts={visibleContacts}
+          onDelete={this.deleteContact}
+        />
+      </div>
     );
   }
 }
