@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import '../ContactForm/ContactForm.css';
+import css from './ContactForm.module.css';
 
 class ContactForm extends Component {
   state = {
@@ -14,7 +14,7 @@ class ContactForm extends Component {
   handleSubmit = e => {
     e.preventDefault();
 
-    const { name, number } = this.state;
+    const { name } = this.state;
     const { contacts } = this.props;
 
     if (contacts.some(contact => contact.name === name)) {
@@ -22,10 +22,6 @@ class ContactForm extends Component {
       return;
     }
 
-    this.props.createUser({
-      name,
-      number,
-    });
     this.reset();
 
     this.props.newUser(this.state);
@@ -40,10 +36,10 @@ class ContactForm extends Component {
 
     return (
       <form className="Form" onSubmit={this.handleSubmit}>
-        <label className="Label">
+        <label className={css.label}>
           Name
           <input
-            className="Input"
+            className={css.input}
             type="text"
             name="name"
             value={name}
@@ -51,10 +47,10 @@ class ContactForm extends Component {
             required
           />
         </label>
-        <label className="Label">
+        <label className={css.label}>
           Number
           <input
-            className="Input"
+            className={css.input}
             type="tel"
             name="number"
             value={number}
@@ -63,7 +59,7 @@ class ContactForm extends Component {
           />
         </label>
 
-        <button className="btn" type="submit">
+        <button className={css.btn} type="submit">
           Add contact
         </button>
       </form>

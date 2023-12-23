@@ -16,26 +16,16 @@ class App extends Component {
   };
 
   addUserName = ({ name, number }) => {
-    const User = {
+    const user = {
       id: nanoid(),
       name,
       number,
     };
 
-    console.log(User);
+    console.log(user);
     this.setState(prevState => ({
-      contacts: [User, ...prevState.contacts],
+      contacts: [user, ...prevState.contacts],
     }));
-  };
-
-  createUser = data => {
-    console.log(data);
-    const newUser = {
-      ...data,
-      id: nanoid(),
-    };
-
-    console.log(newUser);
   };
 
   changeFilter = e => {
@@ -74,12 +64,7 @@ class App extends Component {
         }}
       >
         <h1 style={{ textAlign: 'center' }}>Phonebook</h1>
-        <ContactForm
-          contacts={contacts}
-          filter={filter}
-          createUser={this.createUser}
-          newUser={this.addUserName}
-        />
+        <ContactForm contacts={contacts} newUser={this.addUserName} />
 
         <h2>Contacts</h2>
         <Filter filter={filter} onChange={this.changeFilter} />

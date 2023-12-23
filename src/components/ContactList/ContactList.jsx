@@ -1,16 +1,9 @@
-import './ContactList.css';
+import ContactItem from 'components/ContactItem/ContactItem';
 
 const ContactList = ({ visibleContacts, onDelete }) => {
   return (
     <ul className="list">
-      {visibleContacts.map(({ id, name, number }) => (
-        <li className="li" key={id}>
-          {name}: {number}
-          <button className="button" type="button" onClick={() => onDelete(id)}>
-            Delete
-          </button>
-        </li>
-      ))}
+      <ContactItem visibleContacts={visibleContacts} onDelete={onDelete} />
     </ul>
   );
 };

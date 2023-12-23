@@ -1,10 +1,15 @@
-import './Filter.css';
+import css from './Filter.module.css';
 
 const Filter = ({ filter, onChange }) => {
   return (
-    <label className="label">
+    <label className={css.label}>
       Find contacts by name
-      <input className="input" type="text" value={filter} onChange={onChange} />
+      <input
+        className={css.input}
+        type="text"
+        value={filter}
+        onChange={onChange}
+      />
     </label>
   );
 };
