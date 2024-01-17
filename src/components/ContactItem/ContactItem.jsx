@@ -1,14 +1,18 @@
 import css from './ContactItem.module.css';
 
-const ContactItem = ({ visibleContacts, onDelete }) => {
-  return visibleContacts.map(({ id, name, number }) => (
-    <li className={css.li} key={id}>
-      {name}: {number}
-      <button className={css.button} type="button" onClick={() => onDelete(id)}>
+const ContactItem = ({ visible, onDelete }) => {
+  return (
+    <li className={css.li}>
+      {visible.name}: {visible.number}
+      <button
+        className={css.button}
+        type="button"
+        onClick={() => onDelete(visible.id)}
+      >
         Delete
       </button>
     </li>
-  ));
+  );
 };
 
 export default ContactItem;

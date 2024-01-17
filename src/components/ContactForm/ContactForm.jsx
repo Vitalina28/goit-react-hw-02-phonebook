@@ -22,9 +22,8 @@ class ContactForm extends Component {
       return;
     }
 
-    this.reset();
-
     this.props.newUser(this.state);
+    this.reset();
   };
 
   reset = () => {
